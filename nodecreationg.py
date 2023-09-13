@@ -8,18 +8,19 @@ import pandas as pd
 file = "social_network_graph_data.xlsx"
 book = pd.read_excel(file)
 
-print(book)
+print(book.columns)
 
 # Create list of friends
-# friends = []
-# for index, row in book.iterrows():
-#     friends.append((row['Friend1'], row['Friend2']))
+friends = []
+for index, row in book.iterrows():
+    friends.append((row['Friend1'], row['Friend2']))
 
 # Draw graph
-# G = nx.Graph()
-# G.add_edges_from(friends)
-# nx.draw(G, with_labels=True, node_color = "blue", font_size = 8, bbox=dict(facecolor='red', alpha=0.5), 
-#         node_size = 100, edge_color = "green", width = 2.0, style = "dashed", alpha = 0.5)
-# plt.show()
+G = nx.Graph()
+G.add_edges_from(friends)
+nx.draw(G, with_labels=True, node_color = "blue", font_size = 10, bbox=dict(facecolor='red', alpha=0.5), 
+        node_size = 100, edge_color = "green", width = 2.0, alpha = 0.5)
+plt.show()
 
 
+ 
