@@ -2,7 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import xlrd
 
-file = open("social network graph data.xlsx")
+file = open("social_network_graph_data.xlsx")
 
 G = nx.Graph()
 friends = []
