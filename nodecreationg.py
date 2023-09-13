@@ -1,22 +1,25 @@
+
 import networkx as nx
 import matplotlib.pyplot as plt
 import xlrd
+import pandas as pd
 
+# Read excel file
 file = "social_network_graph_data.xlsx"
+book = pd.read_excel(file)
 
-G = nx.Graph()
-friends = []
+print(book)
 
-book = xlrd.open_workbook(file)
-sheet = book.sheet_by_index(0)
+# Create list of friends
+# friends = []
+# for index, row in book.iterrows():
+#     friends.append((row['Friend1'], row['Friend2']))
 
-for row in range(sheet.nrows):
-    friends.append(((sheet.cell_value(row, 0), sheet.cell_value(row, 1))))
-
-print(friends)
-G.add_edges_from(friends)
-nx.draw(G, with_labels=True, node_color = "blue", font_size = 8, bbox=dict(facecolor='red', alpha=0.5), 
-        node_size = 100, edge_color = "green", width = 2.0, style = "dashed", alpha = 0.5)
-plt.show()
+# Draw graph
+# G = nx.Graph()
+# G.add_edges_from(friends)
+# nx.draw(G, with_labels=True, node_color = "blue", font_size = 8, bbox=dict(facecolor='red', alpha=0.5), 
+#         node_size = 100, edge_color = "green", width = 2.0, style = "dashed", alpha = 0.5)
+# plt.show()
 
 
