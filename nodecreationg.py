@@ -2,13 +2,13 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import xlrd
 
-file = open("social_network_graph_data.xlsx")
+file = "social_network_graph_data.xlsx"
 
 G = nx.Graph()
 friends = []
 
-xlrd.open_workbook("social network graph data.xlsx")
-sheet = file.sheet_by_index(0)
+book = xlrd.open_workbook(file)
+sheet = book.sheet_by_index(0)
 
 for row in range(sheet.nrows):
     friends.append(((sheet.cell_value(row, 0), sheet.cell_value(row, 1))))
