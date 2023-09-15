@@ -1,6 +1,5 @@
 import networkx as nx
 import matplotlib.pyplot as plt
-import xlrd
 import pandas as pd
 import subprocess
 from imessage_reader import fetch_data
