@@ -10,3 +10,6 @@
 ##### The social network graph will provide a visual representation of your social network that updates dynamically to show which connections are the most nurtured, which ones could use a quick check in, and will also suggest ways to grow your graph by using mutuals and interests. This tool could be used in the enterprise experience as well to automate communication between team members and executives that will lead to organic growth and strengthening of any establishment. Of course notes and other talking points will automatically be screped by this tool!
 
 ##### The network will also use data scraped from past interactions with specific friends to suggest talking points, resurface old memories, and plan meetup/date ideas.
+
+Sources:
+[networkx docs](https://networkx.org/documentation/stable/index.html)
