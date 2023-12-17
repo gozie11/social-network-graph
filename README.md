@@ -9,7 +9,7 @@
 
 ##### The network will also use data scraped from past interactions with specific friends to suggest talking points, resurface old memories, and plan meetup/date ideas.
 
-## I need to learn more about ML to figure out how to train a model that will get better and better at classifying relationship type as well as conversation types. The model will likely be able to determine where to lead the conversation and different things to expand upon... I'm leadin ghtis to a very ambitious point and realize that I should probably just get and mvc rolled out. I'm passionate about this though and as of now I don't think I could let it die!
+###### I need to learn more about ML to figure out how to train a model that will get better and better at classifying relationship type as well as conversation types. The model will likely be able to determine where to lead the conversation and different things to expand upon... I'm leadin ghtis to a very ambitious point and realize that I should probably just get and mvc rolled out. I'm passionate about this though and as of now I don't think I could let it die!
 
 Sources:
 [networkx docs](https://networkx.org/documentation/stable/index.html)
