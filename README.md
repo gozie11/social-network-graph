@@ -13,3 +13,5 @@
 
 Sources:
 [networkx docs](https://networkx.org/documentation/stable/index.html)
+[nodemessage](https://www.npmjs.com/package/nodemessage)
+[node-mac-contacts](https://www.npmjs.com/package/node-mac-contacts)
