@@ -76,7 +76,7 @@ conversation = [
 conversation_text = "\n".join(conversation)
 
 # Constructing the prompt for sentiment analysis
-content = f"Analyze the sentiment of this conversation:\n{conversation_text}"
+content = f"Analyze the sentiment of this conversation and provide aditional talking points/suggestions to extend the conversation. keep your response as concise as possible. give me bullet points:\n{conversation_text}"
 
 # Sending the request to OpenAI API
 response = client.completions.create(model="text-davinci-002", prompt=content,
