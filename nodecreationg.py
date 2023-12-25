@@ -9,6 +9,13 @@ import json
 from openai import OpenAI
 from config import api_key
 
+
+
+# TODO: 
+# 1. choose a better way to track ideas
+# 2. idea: when a user clicks on a node, it will expand to show you sentiment, suggestions of more convo, and other details
+
+
 client = OpenAI(api_key=api_key)
 
 

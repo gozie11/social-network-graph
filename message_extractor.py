@@ -1,8 +1,8 @@
 ###
-This  is a very rough draft.
+# This  is a very rough draft.
 ###
 
-  from imessage_reader import fetch_data
+from imessage_reader import fetch_data
 import pprint
 import json
 
