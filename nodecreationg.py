@@ -14,6 +14,9 @@ from config import api_key
 # TODO: 
 # 1. choose a better way to track ideas
 # 2. idea: when a user clicks on a node, it will expand to show you sentiment, suggestions of more convo, and other details
+# 3. We still need to figure out how to get users response to text messages.
+# 4. Scope creep : allow the use to input their own promt to the openai api
+# 5. I could label the nodes with phone number and number of messages sent 
 
 
 client = OpenAI(api_key=api_key)
@@ -25,13 +28,13 @@ client = OpenAI(api_key=api_key)
 # output = subprocess.check_output(command, universal_newlines=True)
 # print("output: ", output)
 
-DB_PATH = "/Users/gozieonyia/Library/Messages/chat.db"
 # Create a FetchData instance
+DB_PATH = "/Users/gozieonyia/Library/Messages/chat.db"
 fd = fetch_data.FetchData(DB_PATH)
 
 # Store messages in my_data
 # This is a list of tuples containing user id, message and service (iMessage or SMS).
-my_data = fd.get_messages()
+message_data = fd.get_messages()
 
 
 # Your OpenAI API key
@@ -51,9 +54,14 @@ my_data = fd.get_messages()
 def get_contact_count(message_dict):
     return len(message_dict.keys())
 
+
+
+
+
+
 message_dict = {}
 message_count ={}
-for message in my_data:
+for message in message_data:
     if len(message[0])<10:
         continue
     # the replace function is used to remove the leading +1 from the phone number credit to copilot
@@ -68,26 +76,60 @@ for message in my_data:
     else:
         message_dict[phone_nubmer].append(message[1])
         message_count[phone_nubmer] += 1
-# prints out the dictionary
-# partial_dict = dict(list(message_dict.items())[:3])
-# pprint.pprint(partial_dict)
+
+# pprint.pprint(message_dict)
+#  message dict example
+#          } 
+#               'phone_number':  ['How fa my bro ',
+#                               'Hello brother ? ',
+#                               'Are you there my bro ? ',
+#                               'Umm you have zelle ? I want to pick $300',
+#                               'You can save my iMessage ',
+#                               'Are you there bruh ? ',
+#                               'Nah my account was banned',
+#                               'Oh ok my bro ',
+#                               'How fa my bro ',
+#                               'I’m just chilling man',
+#                               'What’s up',
+#                               'Doing good fam ',
+#                               ]
+#            }    
+
+
 #TODO: subsitiute the hard coded conversation with the message_dict  of a specific contact
 # Example conversation data
-conversation = [
-    "Hey Dean how’ve you been? This is Gozie",
-    "Hey Gozie!! Long time! Oh nothing much, just uprooted my entire life and moved to North Carolina. Haha",
-    # ... include other parts of the conversation
-]
+
+#eventuall I want to be able to use the contacts name instead of the phone number
+while True:
+    desired_contact = input("\nEnter the phone number of the contact you want to analyze: ")
+
+    if desired_contact in message_dict:
+        print("contact",desired_contact, "found! ")
+        print("Starting analysis... \n")
+        print("contact",desired_contact, "has sent", message_count[desired_contact], "messages")
+        # print(message_dict[desired_contact])
+        conversation = message_dict[desired_contact]
+        break
+    else:
+        print("\ncontact not found! Try again. or press ctrl + c to exit")
+        continue
+
 
 # Joining the conversation into a single string
-conversation_text = "\n".join(conversation)
+
+conversation_text = "\n".join(filter(None, conversation))
 
 # Constructing the prompt for sentiment analysis
-content = f"Analyze the sentiment of this conversation and provide aditional talking points/suggestions to extend the conversation. keep your response as concise as possible. give me bullet points:\n{conversation_text}"
+content = f"""Analyze the sentiment of a list of text messages, already loaded into a Python list, 
+using an AI-based sentiment analysis tool. analyze the content,and determine if the sentiment is positive, 
+negative, or neutral. Then, examine the content to identify key themes, subjects, or recurring patterns. 
+Based on this analysis, generate insightful talking points or suggestions that can either delve deeper into the 
+prevalent topics or introduce new, related subjects. These talking points should be contextually relevant and aim to 
+enrich the conversation.keep your response as concise as possible. give me bullet points:\n{conversation_text}"""
 
 # Sending the request to OpenAI API
 response = client.completions.create(model="text-davinci-002", prompt=content,
-        max_tokens=50,  # Extended for longer responses
+        max_tokens=2000,  # Extended for longer responses
         temperature=0.5,  # Adjust for creativity
         top_p=1,  # Control response diversity
         frequency_penalty=0,  # Fine-tune word frequency
@@ -96,6 +138,11 @@ response = client.completions.create(model="text-davinci-002", prompt=content,
 
 # Extracting and printing the response
 print("open_ai response :)",response.choices[0].text.strip())
+
+
+
+
+
 
 print(get_contact_count(message_dict))
 # pprint.pprint(message_dict)
