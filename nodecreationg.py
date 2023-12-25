@@ -11,7 +11,7 @@ from config import api_key
 
 
 
-# TODO: 
+# TODO: read this https://blog.langchain.dev/tutorial-chatgpt-over-your-data/
 # 1. choose a better way to track ideas
 # 2. idea: when a user clicks on a node, it will expand to show you sentiment, suggestions of more convo, and other details
 # 3. We still need to figure out how to get users response to text messages.
