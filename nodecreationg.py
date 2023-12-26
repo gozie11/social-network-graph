@@ -25,6 +25,9 @@ API_KEY = os.getenv("openai_api_key")
 # 3. We still need to figure out how to get users response to text messages.
 # 4. Scope creep : allow the use to input their own promt to the openai api
 # 5. I could label the nodes with phone number and number of messages sent 
+# 6. I want node size to correspond to the number of messages sent
+# 7. I want the node color to correspond to the number of messages sent
+
 
 
 client = OpenAI(api_key=API_KEY)
@@ -45,12 +48,8 @@ fd = fetch_data.FetchData(DB_PATH)
 message_data = fd.get_messages()
 
 
-# Your OpenAI API key
-
-
-# pprint.pprint(my_data)
-
-# print(my_data[0][1], '\n', my_data[0][2],'\n', my_data[0][0],'\n')
+# pprint.pprint(message_data)
+# print(message_data[0][1], '\n', message_data[0][2],'\n', message_data[0][0],'\n')
 
 # lets make a dictionary of the messages. The keys will be the user id and the values will be a list of the messages.
 # the messages will be important to analyze the sentiment of the messages and other things.
@@ -62,13 +61,9 @@ message_data = fd.get_messages()
 def get_contact_count(message_dict):
     return len(message_dict.keys())
 
-
-
-
-
-
 message_dict = {}
 message_count ={}
+
 for message in message_data:
     if len(message[0])<10:
         continue
@@ -77,7 +72,6 @@ for message in message_data:
     phone_nubmer = message[0].replace('+1', '')
     # print("test x")
 
-
     if phone_nubmer not in message_dict:
         message_dict[phone_nubmer] = [message[1]]
         message_count[phone_nubmer] = 1
@@ -85,23 +79,7 @@ for message in message_data:
         message_dict[phone_nubmer].append(message[1])
         message_count[phone_nubmer] += 1
 
-# pprint.pprint(message_dict)
-#  message dict example
-#          } 
-#               'phone_number':  ['How fa my bro ',
-#                               'Hello brother ? ',
-#                               'Are you there my bro ? ',
-#                               'Umm you have zelle ? I want to pick $300',
-#                               'You can save my iMessage ',
-#                               'Are you there bruh ? ',
-#                               'Nah my account was banned',
-#                               'Oh ok my bro ',
-#                               'How fa my bro ',
-#                               'I’m just chilling man',
-#                               'What’s up',
-#                               'Doing good fam ',
-#                               ]
-#            }    
+
 
 
 #TODO: subsitiute the hard coded conversation with the message_dict  of a specific contact
@@ -145,25 +123,9 @@ response = client.completions.create(model="text-davinci-002", prompt=content,
     )
 
 # Extracting and printing the response
-print("open_ai response :)",response.choices[0].text.strip())
-
-
-
-
-
+print("GPT RESPONSE: ",response.choices[0].text.strip())
 
 print(get_contact_count(message_dict))
-# pprint.pprint(message_dict)
-# pprint.pprint(message_dict['gaylerivers39@icloud.com'])
-
-
-
-#prints out the message count for each contact
-# pprint.pprint(message_count)
-
-# You can also use the json module to print the dictionary in a more readable format.  
-# Here is an example:  import json  print(json.dumps(message_dict, indent=4))  This will print the dictionary in a more readable format.  
-# I hope this helps.  Let me know if you have any questions.  Thanks.
 
 #I wonder if the value being appended to contacts can be an object that contains the number of messages sent in order to make the node size correspond to the number of messages sent
 contacts=[]
@@ -173,21 +135,27 @@ for key in message_count:
 G2 = nx.Graph()
 G2.add_nodes_from(contacts)
 
-#I want node size to correspond to the number of messages sent
-#how can I do that?:  
-#I want the node color to correspond to the number of messages sent
-#how can I do that?
-#
-# nx.draw(G, with_labels=True, node_color = "blue", font_size = 8, bbox=dict(facecolor='red', alpha=0.5), node_size = 100, edge_color = "green", width = 2.0, style = "dashed", alpha = 0.5)
-
-
-nx.draw(G2, with_labels=True, node_color = "blue", font_size = 7, 
-        node_size = 100, edge_color = "green", width = 2.0, alpha = 0.5)
+nx.draw(
+    G2, with_labels=True, 
+    node_color = "blue", 
+    font_size = 7, 
+    node_size = 100, 
+    edge_color = "green", 
+    width = 2.0, 
+    alpha = 0.5
+    )
 
 plt.show(block=False)
 wait = input("PRESS ENTER TO CONTINUE.\n")
-# plt.close()
 print("done")
+
+
+
+
+
+
+
+
 
 # # Draw graph
 # G = nx.Graph()
@@ -210,3 +178,20 @@ print("done")
 
 
 
+# pprint.pprint(message_dict)
+#  message dict example
+#          } 
+#               'phone_number':  ['How fa my bro ',
+#                               'Hello brother ? ',
+#                               'Are you there my bro ? ',
+#                               'Umm you have zelle ? I want to pick $300',
+#                               'You can save my iMessage ',
+#                               'Are you there bruh ? ',
+#                               'Nah my account was banned',
+#                               'Oh ok my bro ',
+#                               'How fa my bro ',
+#                               'I’m just chilling man',
+#                               'What’s up',
+#                               'Doing good fam ',
+#                               ]
+#            }    
