@@ -7,7 +7,15 @@ from imessage_reader import fetch_data
 import pprint
 import json
 from openai import OpenAI
-from config import api_key
+# from config import api_key
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+API_KEY = os.getenv("openai_api_key")
+
+
 
 
 
@@ -19,7 +27,7 @@ from config import api_key
 # 5. I could label the nodes with phone number and number of messages sent 
 
 
-client = OpenAI(api_key=api_key)
+client = OpenAI(api_key=API_KEY)
 
 
 # # Define the command to execute the JavaScript script
@@ -29,7 +37,7 @@ client = OpenAI(api_key=api_key)
 # print("output: ", output)
 
 # Create a FetchData instance
-DB_PATH = "/Users/gozieonyia/Library/Messages/chat.db"
+DB_PATH = os.getenv("DB_PATH")
 fd = fetch_data.FetchData(DB_PATH)
 
 # Store messages in my_data
@@ -107,7 +115,7 @@ while True:
         print("contact",desired_contact, "found! ")
         print("Starting analysis... \n")
         print("contact",desired_contact, "has sent", message_count[desired_contact], "messages")
-        # print(message_dict[desired_contact])
+        print(message_dict[desired_contact])
         conversation = message_dict[desired_contact]
         break
     else:
