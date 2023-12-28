@@ -11,6 +11,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import os
 
+#command to pull variables from .env file
 load_dotenv()
 
 API_KEY = os.getenv("openai_api_key")
@@ -20,7 +21,7 @@ API_KEY = os.getenv("openai_api_key")
 
 
 # TODO: read this https://blog.langchain.dev/tutorial-chatgpt-over-your-data/
-# 1. choose a better way to track ideas
+# 1. put message data into vector embeddings
 # 2. idea: when a user clicks on a node, it will expand to show you sentiment, suggestions of more convo, and other details
 # 3. We still need to figure out how to get users response to text messages.
 # 4. Scope creep : allow the use to input their own promt to the openai api
