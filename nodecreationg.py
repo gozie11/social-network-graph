@@ -42,6 +42,8 @@ client = OpenAI(api_key=API_KEY)
 # Create a FetchData instance
 DB_PATH = os.getenv("DB_PATH")
 fd = fetch_data.FetchData(DB_PATH)
+#this function adds a database to the project directory
+fetch_data.FetchData.show_user_txt(fd, "sqlite")
 
 # Store messages in my_data
 # This is a list of tuples containing user id, message and service (iMessage or SMS).

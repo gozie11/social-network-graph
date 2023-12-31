@@ -3,3 +3,5 @@ __pycache__/config.cpython-311.pyc
 .env
 .venv
 node_modules
+iMessage-Data.sqlite
+.DS_Store
