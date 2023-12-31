@@ -14,6 +14,20 @@ import os
 load_dotenv()
 
 API_KEY = os.getenv("openai_api_key")
+DB_PATH = os.getenv("DB_PATH")
+
+
+
+ASTRA_DB_SECURE_BUNDLE_PATH=os.getenv("ASTRA_DB_SECURE_BUNDLE_PATH")
+ASTRA_DB_APPLICATION_TOKEN = os.getenv("ASTRA_DB_APPLICATION_TOKEN")
+ASTRA_DB_CLIENT_ID = os.getenv("ASTRA_DB_CLIENT_ID")
+
+ASTRA_DB_SECRET =os.getenv ("ASTRA_DB_SECRET")
+ASTRA_DB_KEYSPACE =os.getenv("ASTRA_DB_KEYSPACE")
+
+# I should be able to use the openai api key from the .env file
+# OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
 
 
 
@@ -40,7 +54,6 @@ client = OpenAI(api_key=API_KEY)
 # print("output: ", output)
 
 # Create a FetchData instance
-DB_PATH = os.getenv("DB_PATH")
 fd = fetch_data.FetchData(DB_PATH)
 #this function adds a database to the project directory
 fetch_data.FetchData.show_user_txt(fd, "sqlite")
