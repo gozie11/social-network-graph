@@ -10,6 +10,17 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import os
 
+#imports from mini-qa
+from langchain.vectorstores.cassandra import Cassandra
+from langchain.indexes.vectorstore import VectorStoreIndexWrapper
+from langchain.llms import OpenAI
+from langchain.embeddings import OpenAIEmbeddings
+
+from cassandra.cluster import Cluster
+from cassandra.auth import PlainTextAuthProvider
+
+from datasets import load_dataset, Dataset
+
 #command to pull variables from .env file
 load_dotenv()
 
@@ -30,7 +41,25 @@ ASTRA_DB_KEYSPACE =os.getenv("ASTRA_DB_KEYSPACE")
 
 
 
+# Wrap this in a function for the love of god
+cloud_config= {
+    "secure_connect_bundle": ASTRA_DB_SECURE_BUNDLE_PATH
+}
+auth_provider = PlainTextAuthProvider(ASTRA_DB_CLIENT_ID, ASTRA_DB_SECRET)
+cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
+astraSession = cluster.connect()
 
+llm = OpenAI(openai_api_key=OPENAI_API_KEY)
+myEmbeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
+
+myCassandraVStore = Cassandra(
+    embedding = myEmbeddings,
+    session = astraSession,
+    keyspace = ASTRA_DB_KEYSPACE,
+    table_name = "messages_extractor",
+)
+
+#wrap above in a function for the love of god!
 
 
 # TODO: read this https://blog.langchain.dev/tutorial-chatgpt-over-your-data/
