@@ -41,8 +41,8 @@ cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
 astraSession = cluster.connect()
 
 llm = OpenAI(openai_api_key=API_KEY)
-breakpoint()
 myEmbeddings = OpenAIEmbeddings(openai_api_key=API_KEY)
+breakpoint()
 
 myCassandraVStore = Cassandra(
     embedding = myEmbeddings,
@@ -51,6 +51,19 @@ myCassandraVStore = Cassandra(
     table_name = "messages_extractor",
 )
 #wrap above in a function for the love of god!
+
+print("loading data from Text files...")
+# i don't think i need this because I already have the data in a database
+convo_data = load_dataset("cassandra", data_dir="data", split="train")
+
+
+
+
+
+
+
+
+
 
 # TODO: read this https://blog.langchain.dev/tutorial-chatgpt-over-your-data/
 # 1. put message data into vector embeddings
