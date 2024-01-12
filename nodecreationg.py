@@ -5,15 +5,61 @@ import subprocess
 from imessage_reader import fetch_data
 import pprint
 import json
-from openai import OpenAI
+
 # from config import api_key
 from dotenv import load_dotenv
 import os
 
-#command to pull variables from .env file
+#imports from mini-qa
+from langchain.vectorstores.cassandra import Cassandra
+from langchain.indexes.vectorstore import VectorStoreIndexWrapper
+from langchain.llms import OpenAI
+from langchain.embeddings import OpenAIEmbeddings
+
+from cassandra.cluster import Cluster
+from cassandra.auth import PlainTextAuthProvider
+
+from datasets import load_dataset, Dataset
+
+#pull variables from .env file
 load_dotenv()
 
 API_KEY = os.getenv("openai_api_key")
+DB_PATH = os.getenv("DB_PATH")
+ASTRA_DB_SECURE_BUNDLE_PATH=os.getenv("ASTRA_DB_SECURE_BUNDLE_PATH")
+ASTRA_DB_APPLICATION_TOKEN = os.getenv("ASTRA_DB_APPLICATION_TOKEN")
+ASTRA_DB_CLIENT_ID = os.getenv("ASTRA_DB_CLIENT_ID")
+ASTRA_DB_SECRET =os.getenv ("ASTRA_DB_SECRET")
+ASTRA_DB_KEYSPACE =os.getenv("ASTRA_DB_KEYSPACE")
+
+# Wrap this in a function for the love of god
+cloud_config= {
+    "secure_connect_bundle": ASTRA_DB_SECURE_BUNDLE_PATH
+}
+auth_provider = PlainTextAuthProvider(ASTRA_DB_CLIENT_ID, ASTRA_DB_SECRET)
+cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
+astraSession = cluster.connect()
+
+llm = OpenAI(openai_api_key=API_KEY)
+myEmbeddings = OpenAIEmbeddings(openai_api_key=API_KEY)
+breakpoint()
+
+myCassandraVStore = Cassandra(
+    embedding = myEmbeddings,
+    session = astraSession,
+    keyspace = ASTRA_DB_KEYSPACE,
+    table_name = "messages_extractor",
+)
+#wrap above in a function for the love of god!
+
+print("loading data from Text files...")
+# i don't think i need this because I already have the data in a database
+convo_data = load_dataset("cassandra", data_dir="data", split="train")
+
+
+
+
+
 
 
 
@@ -28,11 +74,6 @@ API_KEY = os.getenv("openai_api_key")
 # 6. I want node size to correspond to the number of messages sent
 # 7. I want the node color to correspond to the number of messages sent
 
-
-
-client = OpenAI(api_key=API_KEY)
-
-
 # # Define the command to execute the JavaScript script
 # command = ['node', 'number_handler.js']
 # # # Execute the command and capture the output
@@ -40,8 +81,8 @@ client = OpenAI(api_key=API_KEY)
 # print("output: ", output)
 
 # Create a FetchData instance
-DB_PATH = os.getenv("DB_PATH")
 fd = fetch_data.FetchData(DB_PATH)
+
 #this function adds a database to the project directory
 fetch_data.FetchData.show_user_txt(fd, "sqlite")
 
@@ -90,12 +131,12 @@ for message in message_data:
 #eventuall I want to be able to use the contacts name instead of the phone number
 while True:
     desired_contact = input("\nEnter the phone number of the contact you want to analyze: ")
-
+#TODO: map desired congtact to contact name
     if desired_contact in message_dict:
         print("contact",desired_contact, "found! ")
         print("Starting analysis... \n")
         print("contact",desired_contact, "has sent", message_count[desired_contact], "messages")
-        print(message_dict[desired_contact])
+        # print(message_dict[desired_contact])
         conversation = message_dict[desired_contact]
         break
     else:
@@ -115,8 +156,10 @@ Based on this analysis, generate insightful talking points or suggestions that c
 prevalent topics or introduce new, related subjects. These talking points should be contextually relevant and aim to 
 enrich the conversation.keep your response as concise as possible. give me bullet points:\n{conversation_text}"""
 
+
+
 # Sending the request to OpenAI API
-response = client.completions.create(model="text-davinci-002", prompt=content,
+response = llm.completions.create(model="text-davinci-002", prompt=content,
         max_tokens=2000,  # Extended for longer responses
         temperature=0.5,  # Adjust for creativity
         top_p=1,  # Control response diversity
