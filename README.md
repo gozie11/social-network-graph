@@ -16,3 +16,4 @@ Sources:
 [nodemessage](https://www.npmjs.com/package/nodemessage)
 [node-mac-contacts](https://www.npmjs.com/package/node-mac-contacts)
 [Louisa Lu Medium post](https://medium.com/swlh/improving-my-dating-life-one-text-analysis-at-a-time-a802cb8c2876)
+[Cleaning data with nlpk and pandas](https://www.youtube.com/watch?v=aF_-Mcw40yk)
