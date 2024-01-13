@@ -15,3 +15,4 @@ Sources:
 [networkx docs](https://networkx.org/documentation/stable/index.html)
 [nodemessage](https://www.npmjs.com/package/nodemessage)
 [node-mac-contacts](https://www.npmjs.com/package/node-mac-contacts)
+[Louisa Lu Medium post](https://medium.com/swlh/improving-my-dating-life-one-text-analysis-at-a-time-a802cb8c2876)
