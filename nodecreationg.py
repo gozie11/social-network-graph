@@ -56,16 +56,9 @@ print("loading data from Text files...")
 # i don't think i need this because I already have the data in a database
 convo_data = load_dataset("cassandra", data_dir="data", split="train")
 
-
-
-
-
-
-
-
-
-
 # TODO: read this https://blog.langchain.dev/tutorial-chatgpt-over-your-data/
+# ~Break this file up into smaller files~ Modularity is important
+
 # 1. put message data into vector embeddings
 # 2. idea: when a user clicks on a node, it will expand to show you sentiment, suggestions of more convo, and other details
 # 3. We still need to figure out how to get users response to text messages.
@@ -84,12 +77,17 @@ convo_data = load_dataset("cassandra", data_dir="data", split="train")
 fd = fetch_data.FetchData(DB_PATH)
 
 #this function adds a database to the project directory
+# maybe I can specify the path because I think this stores the data in the document directory
 fetch_data.FetchData.show_user_txt(fd, "sqlite")
 
 # Store messages in my_data
 # This is a list of tuples containing user id, message and service (iMessage or SMS).
 message_data = fd.get_messages()
 
+# this would be a good way to trim the amount of messages you want to work with
+# you could choose to only analyze the last X messages
+print("ALERT WE ARE TRIMMING THE DATA HERE")
+message_data = message_data[0:1000]
 
 # pprint.pprint(message_data)
 # print(message_data[0][1], '\n', message_data[0][2],'\n', message_data[0][0],'\n')
