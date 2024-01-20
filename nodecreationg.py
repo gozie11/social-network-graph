@@ -70,6 +70,7 @@ convo_data = load_dataset("cassandra", data_dir="data", split="train")
 # # Define the command to execute the JavaScript script
 # command = ['node', 'number_handler.js']
 # # # Execute the command and capture the output
+# should I wrap this in a try ... finally block? I wonder if it will cause a memory leak if I don't
 # output = subprocess.check_output(command, universal_newlines=True)
 # print("output: ", output)
 
