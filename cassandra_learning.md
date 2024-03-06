@@ -1,6 +1,7 @@
 # Reading into cassandra db documentation
 
-## [Terminology]([url](https://docs.datastax.com/en/astra/astra-db-vector/get-started/terminology.html)) 
+### Terminology
+[Terminology]([url](https://docs.datastax.com/en/astra/astra-db-vector/get-started/terminology.html)) 
 
 
 ### Quick start
