@@ -1,5 +1,8 @@
 # Reading into cassandra db documentation
 
+  - [loading your own data]([url](https://docs.datastax.com/en/astra/astra-db-vector/databases/load-data.html))
+  - [Build a chatbot with LangCahin]([url](https://docs.datastax.com/en/astra/astra-db-vector/tutorials/chatbot.html))
+
 ### Terminology
 [Terminology]([url](https://docs.datastax.com/en/astra/astra-db-vector/get-started/terminology.html)) 
 
@@ -33,32 +36,35 @@
 
   
   
-```python
+  ```python
+  
+  import os
+  
+  from astrapy.db import AstraDB
+  
+  # Initialize the client. The namespace parameter is optional if you use
+  # "default_keyspace".
+  db = AstraDB(
+      token=os.environ["ASTRA_DB_APPLICATION_TOKEN"],
+      api_endpoint=os.environ["ASTRA_DB_API_ENDPOINT"],
+      namespace="default_keyspace",
+  )
+  print(db)
+  
+  # ⬇️ NEW CODE
+  
+  # Create a collection. The default similarity metric is "cosine".
+  collection = db.create_collection("vector_test", dimension=5, metric="cosine")
+  print(collection)
+  
+  # ⬆️ NEW CODE
+  
+  # Delete the collection
+  res = db.delete_collection(collection_name="vector_test")
+  print(res)
+  
+  ```
 
-import os
 
-from astrapy.db import AstraDB
 
-# Initialize the client. The namespace parameter is optional if you use
-# "default_keyspace".
-db = AstraDB(
-    token=os.environ["ASTRA_DB_APPLICATION_TOKEN"],
-    api_endpoint=os.environ["ASTRA_DB_API_ENDPOINT"],
-    namespace="default_keyspace",
-)
-print(db)
-
-# ⬇️ NEW CODE
-
-# Create a collection. The default similarity metric is "cosine".
-collection = db.create_collection("vector_test", dimension=5, metric="cosine")
-print(collection)
-
-# ⬆️ NEW CODE
-
-# Delete the collection
-res = db.delete_collection(collection_name="vector_test")
-print(res)
-
-```
   
