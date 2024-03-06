@@ -1,14 +1,14 @@
 # Reading into cassandra db documentation
 
-  - [loading your own data]([url](https://docs.datastax.com/en/astra/astra-db-vector/databases/load-data.html))
-  - [Build a chatbot with LangCahin]([url](https://docs.datastax.com/en/astra/astra-db-vector/tutorials/chatbot.html))
+  - [loading your own data](https://docs.datastax.com/en/astra/astra-db-vector/databases/load-data.html)
+  - [Build a chatbot with LangCahin](https://docs.datastax.com/en/astra/astra-db-vector/tutorials/chatbot.html)
 
 ### Terminology
-[Terminology]([url](https://docs.datastax.com/en/astra/astra-db-vector/get-started/terminology.html)) 
+[Terminology](https://docs.datastax.com/en/astra/astra-db-vector/get-started/terminology.html) 
 
 
 ### Quick start
-[Quick Start]([url](https://docs.datastax.com/en/astra/astra-db-vector/get-started/quickstart.html)https://docs.datastax.com/en/astra/astra-db-vector/get-started/quickstart.html)
+[Quick Start](https://docs.datastax.com/en/astra/astra-db-vector/get-started/quickstart.html)https://docs.datastax.com/en/astra/astra-db-vector/get-started/quickstart.html)
 
 
 #### Objective
@@ -25,7 +25,7 @@
   - Can we set environmental variables that are specific to to a virtual environment? How? please link source.
   
   - I don't understand the difference between creating a collection and loading vector embeddings...
-    [Terminology]([url](https://docs.datastax.com/en/astra/astra-db-vector/get-started/terminology.html)) 
+    [Terminology](https://docs.datastax.com/en/astra/astra-db-vector/get-started/terminology.html) 
 
 
   #### Tip : Don't name astra init file astrapy.py as this will cause a namespace collision.
