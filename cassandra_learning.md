@@ -6,6 +6,8 @@
 ### Terminology
 [Terminology](https://docs.datastax.com/en/astra/astra-db-vector/get-started/terminology.html) 
 
+Collection: A group of data that can be of various types. Synonymous with dataset.
+
 
 ### Quick start
 [Quick Start](https://docs.datastax.com/en/astra/astra-db-vector/get-started/quickstart.html)https://docs.datastax.com/en/astra/astra-db-vector/get-started/quickstart.html)
